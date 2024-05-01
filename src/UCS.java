@@ -1,23 +1,6 @@
 import java.util.*;
-import java.nio.file.*;
-import java.io.IOException;
 
 public class UCS {
-    public static void main(String[] args) throws IOException {
-        List<String> wordList = Files.readAllLines(Paths.get("./words_alpha.txt"));
-        Set<String> wordSet = new HashSet<>(wordList);
-        String startWord = "bolder".toLowerCase();
-        String targetWord = "higher".toLowerCase();
-
-        long startTime = System.nanoTime();
-        findWordLadder(startWord, targetWord, wordSet);
-        long endTime = System.nanoTime();
-
-        long duration = (endTime - startTime) / 1_000_000; // convert to milliseconds
-
-        System.out.println("Execution time: " + duration + " ms");
-    }
-
     public static void findWordLadder(String startWord, String targetWord, Set<String> wordSet) {
         PriorityQueue<WordNode> queue = new PriorityQueue<>(Comparator.comparingInt(node -> node.numSteps));
         queue.add(new WordNode(startWord, 0, null));
