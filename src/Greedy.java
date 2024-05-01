@@ -40,4 +40,31 @@ public class Greedy {
         // Jika tidak ada word ladder yang ditemukan, mencetak pesan
         System.out.println("No word ladder found.");
     }
+
+    public static WordNode findWordLadderGUI(String startWord, String targetWord, Set<String> wordSet) {
+        PriorityQueue<WordNode> queue = new PriorityQueue<>(Comparator.comparingInt(node -> WordLadderUtils.heuristic(node.word, targetWord)));
+        queue.add(new WordNode(startWord, 0, null));
+        Set<String> visited = new HashSet<>();
+    
+        while (!queue.isEmpty()) {
+            WordNode node = queue.poll();
+            String word = node.word;
+    
+            if (word.equals(targetWord)) {
+                return node; // Return the final node instead of printing
+            }
+    
+            if (!visited.add(word)) {
+                continue;
+            }
+    
+            for (String neighbor : WordLadderUtils.getNeighbors(word)) {
+                if (wordSet.contains(neighbor) && !visited.contains(neighbor)) {
+                    queue.add(new WordNode(neighbor, node.numSteps + 1, node));
+                }
+            }
+        }
+    
+        return null; // Return null if no word ladder is found
+    }
 }

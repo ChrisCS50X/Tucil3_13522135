@@ -63,4 +63,28 @@ public class WordLadderUtils {
         System.out.println("Word ladder: " + String.join(" -> ", words));
         System.out.println("Distance: " + distance);
     }
+
+    public static String printWordLadderGUI(WordNode node) {
+        Deque<String> words = new ArrayDeque<>();
+        int distance = node.numSteps; // 
+        while (node != null) {
+            words.push(node.word);
+            node = node.pre;
+        }
+        // Mencetak word ladder dan jarak
+        String result = "Word ladder: " + String.join(" -> ", words) + "\n" + "Distance: " + distance;
+        return result;
+    }
+
+    public static String printWordLadderGUIA(WordNode node) {
+        Deque<String> words = new ArrayDeque<>();
+        int distance = node.numSteps - 1; // 
+        while (node != null) {
+            words.push(node.word);
+            node = node.pre;
+        }
+        // Mencetak word ladder dan jarak
+        String result = "Word ladder: " + String.join(" -> ", words) + "\n" + "Distance: " + distance;
+        return result;
+    }
 }
