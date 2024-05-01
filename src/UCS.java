@@ -28,7 +28,7 @@ public class UCS {
             String word = node.word;
 
             if (word.equals(targetWord)) {
-                printWordLadder(node);
+                WordLadderUtils.printWordLadder(node);
                 return;
             }
 
@@ -36,7 +36,7 @@ public class UCS {
                 continue;
             }
 
-            for (String neighbor : getNeighbors(word)) {
+            for (String neighbor : WordLadderUtils.getNeighbors(word)) {
                 if (wordSet.contains(neighbor) && !visited.contains(neighbor)) {
                     queue.add(new WordNode(neighbor, node.numSteps + 1, node));
                 }
@@ -46,33 +46,4 @@ public class UCS {
         System.out.println("No word ladder found.");
     }
 
-    private static List<String> getNeighbors(String word) {
-        List<String> neighbors = new ArrayList<>();
-        char[] chars = word.toCharArray();
-
-        for (int i = 0; i < chars.length; i++) {
-            char old = chars[i];
-            for (char c = 'a'; c <= 'z'; c++) {
-                if (c == old) {
-                    continue;
-                }
-                chars[i] = c;
-                neighbors.add(new String(chars));
-            }
-            chars[i] = old;
-        }
-
-        return neighbors;
-    }
-
-    private static void printWordLadder(WordNode node) {
-        Deque<String> words = new ArrayDeque<>();
-        int distance = node.numSteps; // Save the distance before the loop
-        while (node != null) {
-            words.push(node.word);
-            node = node.pre;
-        }
-        System.out.println("Word ladder: " + String.join(" -> ", words));
-        System.out.println("Distance: " + distance);
-    }
 }

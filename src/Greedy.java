@@ -6,8 +6,8 @@ public class Greedy {
     public static void main(String[] args) throws IOException {
         List<String> wordList = Files.readAllLines(Paths.get("./words_alpha.txt"));
         Set<String> wordSet = new HashSet<>(wordList);
-        String startWord = "filthy".toLowerCase();
-        String targetWord = "higher".toLowerCase();
+        String startWord = "richer".toLowerCase();
+        String targetWord = "bolder".toLowerCase();
 
         long startTime = System.nanoTime();
         findWordLadder(startWord, targetWord, wordSet);
@@ -19,7 +19,7 @@ public class Greedy {
     }
 
     public static void findWordLadder(String startWord, String targetWord, Set<String> wordSet) {
-        PriorityQueue<WordNode> queue = new PriorityQueue<>(Comparator.comparingInt(node -> heuristic(node.word, targetWord)));
+        PriorityQueue<WordNode> queue = new PriorityQueue<>(Comparator.comparingInt(node -> WordLadderUtils.heuristic(node.word, targetWord)));
         queue.add(new WordNode(startWord, 0, null));
         Set<String> visited = new HashSet<>();
 
@@ -28,7 +28,7 @@ public class Greedy {
             String word = node.word;
 
             if (word.equals(targetWord)) {
-                printWordLadder(node);
+                WordLadderUtils.printWordLadder(node);
                 return;
             }
 
@@ -36,7 +36,7 @@ public class Greedy {
                 continue;
             }
 
-            for (String neighbor : getNeighbors(word)) {
+            for (String neighbor : WordLadderUtils.getNeighbors(word)) {
                 if (wordSet.contains(neighbor) && !visited.contains(neighbor)) {
                     queue.add(new WordNode(neighbor, node.numSteps + 1, node));
                 }
@@ -46,43 +46,4 @@ public class Greedy {
         System.out.println("No word ladder found.");
     }
 
-    private static List<String> getNeighbors(String word) {
-        List<String> neighbors = new ArrayList<>();
-        char[] chars = word.toCharArray();
-
-        for (int i = 0; i < chars.length; i++) {
-            char old = chars[i];
-            for (char c = 'a'; c <= 'z'; c++) {
-                if (c == old) {
-                    continue;
-                }
-                chars[i] = c;
-                neighbors.add(new String(chars));
-            }
-            chars[i] = old;
-        }
-
-        return neighbors;
-    }
-
-    private static void printWordLadder(WordNode node) {
-        Deque<String> words = new ArrayDeque<>();
-        int distance = node.numSteps; // Save the distance before the loop
-        while (node != null) {
-            words.push(node.word);
-            node = node.pre;
-        }
-        System.out.println("Word ladder: " + String.join(" -> ", words));
-        System.out.println("Distance: " + distance);
-    }
-
-    private static int heuristic(String word, String target) {
-        int mismatches = 0;
-        for (int i = 0; i < word.length(); i++) {
-            if (word.charAt(i) != target.charAt(i)) {
-                mismatches++;
-            }
-        }
-        return mismatches;
-    }
 }

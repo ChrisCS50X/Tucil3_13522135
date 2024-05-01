@@ -6,8 +6,8 @@ public class Astar {
     public static void main(String[] args) throws IOException {
         List<String> wordList = Files.readAllLines(Paths.get("./words_alpha.txt"));
         Set<String> wordSet = new HashSet<>(wordList);
-        String startWord = "filthy".toLowerCase();
-        String targetWord = "Animal".toLowerCase();
+        String startWord = "bolder".toLowerCase();
+        String targetWord = "higher".toLowerCase();
 
         long startTime = System.nanoTime();
         findWordLadder(startWord, targetWord, wordSet);
@@ -29,7 +29,7 @@ public class Astar {
             return;
         }
 
-        PriorityQueue<WordNode> wordQueue = new PriorityQueue<>(Comparator.comparingInt(node -> node.numSteps + hammingDistance(node.word, targetWord)));
+        PriorityQueue<WordNode> wordQueue = new PriorityQueue<>(Comparator.comparingInt(node -> node.numSteps + WordLadderUtils.heuristic(node.word, targetWord)));
         wordQueue.add(new WordNode(startWord, 1, null));
 
         wordSet.add(targetWord);
@@ -39,13 +39,7 @@ public class Astar {
             String currentWord = currentNode.word;
 
             if (currentWord.equals(targetWord)) {
-                ArrayList<String> wordLadder = new ArrayList<String>();
-                for (WordNode node = currentNode; node != null; node = node.pre) {
-                    wordLadder.add(node.word);
-                }
-                Collections.reverse(wordLadder);
-                System.out.println(wordLadder);
-                System.out.println("Distance: " + (currentNode.numSteps - 1));
+                WordLadderUtils.printWordLadderA(currentNode);
                 return;
             }
 
@@ -69,13 +63,4 @@ public class Astar {
         }
     }
 
-    private static int hammingDistance(String word1, String word2) {
-        int distance = 0;
-        for (int i = 0; i < word1.length(); i++) {
-            if (word1.charAt(i) != word2.charAt(i)) {
-                distance++;
-            }
-        }
-        return distance;
-    }
 }
