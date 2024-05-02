@@ -29,7 +29,7 @@ public class MainGUI {
         panel.setLayout(null);
 
         // Create the start word label and text field
-        JLabel startLabel = new JLabel("Enter the start word:");
+        JLabel startLabel = new JLabel("Masukkan Start Word:");
         startLabel.setBounds(10, 20, 200, 25);
         panel.add(startLabel);
 
@@ -38,7 +38,7 @@ public class MainGUI {
         panel.add(startText);
 
         // Create the target word label and text field
-        JLabel targetLabel = new JLabel("Enter the target word:");
+        JLabel targetLabel = new JLabel("Masukkan End Word:");
         targetLabel.setBounds(10, 60, 200, 25);
         panel.add(targetLabel);
 
@@ -47,7 +47,7 @@ public class MainGUI {
         panel.add(targetText);
 
         // Create the algorithm choice label and combo box
-        JLabel algorithmLabel = new JLabel("Choose an algorithm:");
+        JLabel algorithmLabel = new JLabel("Pilih Algoritma:");
         algorithmLabel.setBounds(10, 100, 200, 25);
         panel.add(algorithmLabel);
 
@@ -93,36 +93,41 @@ public class MainGUI {
 
                 // Validate the words
                 if (!wordSet.contains(startWord) || !wordSet.contains(targetWord)) {
-                    outputArea.setText("Error: Start Word and End word must be in the English dictionary.");
+                    outputArea.setText("Error: Start Word and End word harus merupakan kata-kata berbahasa inggris.");
                     return;
                 }
                 if (startWord.length() != targetWord.length()) {
-                    outputArea.setText("Error: Start Word and End word must have the same length.");
+                    outputArea.setText("Error: Start Word and End word harus mempunyai panjang kata yang sama.");
                     return;
                 }
 
                 // Run the selected algorithm
                 long startTime = System.nanoTime();
-                String result = "";
+                WordLadderResult result;
                 switch (algorithm) {
                     case "Astar":
-                        result = WordLadderUtils
-                                .printWordLadderGUIA(Astar.findWordLadderGUI(startWord, targetWord, wordSet));
+                        result = Astar.findWordLadderGUI(startWord, targetWord, wordSet);
                         break;
                     case "Greedy":
-                        result = WordLadderUtils
-                                .printWordLadderGUI(Greedy.findWordLadderGUI(startWord, targetWord, wordSet));
+                        result = Greedy.findWordLadderGUI(startWord, targetWord, wordSet);
                         break;
                     case "UCS":
-                        result = WordLadderUtils
-                                .printWordLadderGUI(UCS.findWordLadderGUI(startWord, targetWord, wordSet));
+                        result = UCS.findWordLadderGUI(startWord, targetWord, wordSet);
                         break;
+                    default:
+                        throw new IllegalArgumentException("Invalid algorithm: " + algorithm);
                 }
                 long endTime = System.nanoTime();
                 long duration = (endTime - startTime) / 1_000_000;
-
-                // Display the execution time
-                outputArea.setText("Execution time: " + duration + " ms\n" + result);
+                
+                // Display the execution time and the result
+                String resultStr;
+                if (algorithm.equals("Astar")) {
+                    resultStr = WordLadderUtils.printWordLadderGUIA(result);
+                } else {
+                    resultStr = WordLadderUtils.printWordLadderGUI(result);
+                }
+                outputArea.setText("Waktu Eksekusi: " + duration + " ms\n" + resultStr);
             }
         });
     }

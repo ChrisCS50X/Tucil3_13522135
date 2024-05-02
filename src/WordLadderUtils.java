@@ -25,7 +25,7 @@ public class WordLadderUtils {
     }
 
     // Metode untuk mencetak word ladder dari suatu node
-    public static void printWordLadder(WordNode node) {
+    public static void printWordLadder(WordNode node, int visitedNodes) {
         Deque<String> words = new ArrayDeque<>();
         int distance = node.numSteps; // Simpan jarak sebelum loop
         // Membangun word ladder dengan mengikuti predecessor dari setiap node
@@ -35,7 +35,8 @@ public class WordLadderUtils {
         }
         // Mencetak word ladder dan jarak
         System.out.println("Word ladder: " + String.join(" -> ", words));
-        System.out.println("Distance: " + distance);
+        System.out.println("Jarak: " + distance);
+        System.out.println("Banyaknya node yang dikunjungi: " + visitedNodes);
     }
 
     // Metode untuk menghitung heuristik antara dua kata
@@ -51,7 +52,7 @@ public class WordLadderUtils {
     }
 
     // Metode untuk mencetak word ladder dari suatu node (versi A*)
-    public static void printWordLadderA(WordNode node) {
+    public static void printWordLadderA(WordNode node, int visitedNodes) {
         Deque<String> words = new ArrayDeque<>();
         int distance = node.numSteps - 1; // Simpan jarak sebelum loop
         // Membangun word ladder dengan mengikuti predecessor dari setiap node
@@ -61,30 +62,33 @@ public class WordLadderUtils {
         }
         // Mencetak word ladder dan jarak
         System.out.println("Word ladder: " + String.join(" -> ", words));
-        System.out.println("Distance: " + distance);
+        System.out.println("Jarak: " + distance);
+        System.out.println("Banyaknya node yang dikunjungi: " + visitedNodes);
     }
 
-    public static String printWordLadderGUI(WordNode node) {
+    public static String printWordLadderGUI(WordLadderResult result) {
+        WordNode node = result.node;
         Deque<String> words = new ArrayDeque<>();
-        int distance = node.numSteps; // 
+        int distance = node.numSteps;
         while (node != null) {
             words.push(node.word);
             node = node.pre;
         }
-        // Mencetak word ladder dan jarak
-        String result = "Word ladder: " + String.join(" -> ", words) + "\n" + "Distance: " + distance;
-        return result;
+        String resultStr = "Word ladder: " + String.join(" -> ", words) + "\n" + "Jarak: " + distance;
+        resultStr += "\nBanyaknya node yang dikunjungi: " + result.visitedNodes;
+        return resultStr;
     }
 
-    public static String printWordLadderGUIA(WordNode node) {
+    public static String printWordLadderGUIA(WordLadderResult result) {
+        WordNode node = result.node;
         Deque<String> words = new ArrayDeque<>();
-        int distance = node.numSteps - 1; // 
+        int distance = node.numSteps - 1;
         while (node != null) {
             words.push(node.word);
             node = node.pre;
         }
-        // Mencetak word ladder dan jarak
-        String result = "Word ladder: " + String.join(" -> ", words) + "\n" + "Distance: " + distance;
-        return result;
+        String resultStr = "Word ladder: " + String.join(" -> ", words) + "\n" + "Jarak: " + distance;
+        resultStr += "\nBanyaknya node yang dikunjungi: " + result.visitedNodes;
+        return resultStr;
     }
 }

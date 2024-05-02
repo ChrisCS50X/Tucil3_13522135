@@ -11,15 +11,19 @@ public class Greedy {
         // Membuat HashSet untuk menyimpan kata-kata yang sudah dikunjungi
         Set<String> visited = new HashSet<>();
 
+        // Mentrack visited nodes
+        int visitedNodes = 0;
+
         // Melakukan loop selama queue tidak kosong
         while (!queue.isEmpty()) {
             // Mengambil dan menghapus WordNode dengan prioritas tertinggi dari queue
             WordNode node = queue.poll();
+            visitedNodes++;
             String word = node.word;
 
             // Jika word sama dengan targetWord, mencetak word ladder dan mengakhiri metode
             if (word.equals(targetWord)) {
-                WordLadderUtils.printWordLadder(node);
+                WordLadderUtils.printWordLadder(node,visitedNodes);
                 return;
             }
 
@@ -41,17 +45,20 @@ public class Greedy {
         System.out.println("No word ladder found.");
     }
 
-    public static WordNode findWordLadderGUI(String startWord, String targetWord, Set<String> wordSet) {
+    public static WordLadderResult findWordLadderGUI(String startWord, String targetWord, Set<String> wordSet) {
         PriorityQueue<WordNode> queue = new PriorityQueue<>(Comparator.comparingInt(node -> WordLadderUtils.heuristic(node.word, targetWord)));
         queue.add(new WordNode(startWord, 0, null));
         Set<String> visited = new HashSet<>();
     
+        int visitedNodes = 0;
+    
         while (!queue.isEmpty()) {
             WordNode node = queue.poll();
+            visitedNodes++;
             String word = node.word;
     
             if (word.equals(targetWord)) {
-                return node; // Return the final node instead of printing
+                return new WordLadderResult(node, visitedNodes); // Return the final node and visitedNodes count
             }
     
             if (!visited.add(word)) {
@@ -65,6 +72,6 @@ public class Greedy {
             }
         }
     
-        return null; // Return null if no word ladder is found
+        return new WordLadderResult(null, visitedNodes); // Return null node and visitedNodes count if no word ladder is found
     }
 }

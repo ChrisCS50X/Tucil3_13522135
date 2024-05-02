@@ -5,7 +5,6 @@ public class Astar {
         /*  Membuat PriorityQueue untuk menyimpan WordNode, dengan Comparator yang 
             membandingkan jumlah langkah dan heuristik
         */
-        
         PriorityQueue<WordNode> wordQueue = new PriorityQueue<>(Comparator.comparingInt(node -> node.numSteps + WordLadderUtils.heuristic(node.word, targetWord)));
         
         // Menambahkan startWord ke queue dengan jumlah langkah 1 dan tanpa predecessor
@@ -14,15 +13,19 @@ public class Astar {
         // Menambahkan targetWord ke wordSet
         wordSet.add(targetWord);
 
+        int visitedNodes = 0;
+
         // Melakukan loop selama queue tidak kosong
         while (!wordQueue.isEmpty()) {
             // Mengambil dan menghapus WordNode dengan prioritas tertinggi dari queue
             WordNode currentNode = wordQueue.poll();
+            visitedNodes++;
+
             String currentWord = currentNode.word;
 
             // Jika currentWord sama dengan targetWord, mencetak word ladder dan mengakhiri metode
             if (currentWord.equals(targetWord)) {
-                WordLadderUtils.printWordLadderA(currentNode);
+                WordLadderUtils.printWordLadderA(currentNode, visitedNodes);
                 return;
             }
 
@@ -51,17 +54,20 @@ public class Astar {
         }
     }
 
-    public static WordNode findWordLadderGUI(String startWord, String targetWord, Set<String> wordSet) {
+    public static WordLadderResult findWordLadderGUI(String startWord, String targetWord, Set<String> wordSet) {
         PriorityQueue<WordNode> wordQueue = new PriorityQueue<>(Comparator.comparingInt(node -> node.numSteps + WordLadderUtils.heuristic(node.word, targetWord)));
         wordQueue.add(new WordNode(startWord, 1, null));
         wordSet.add(targetWord);
     
+        int visitedNodes = 0;
+    
         while (!wordQueue.isEmpty()) {
             WordNode currentNode = wordQueue.poll();
+            visitedNodes++;
             String currentWord = currentNode.word;
     
             if (currentWord.equals(targetWord)) {
-                return currentNode; // Return the final node instead of printing
+                return new WordLadderResult(currentNode, visitedNodes); // Return the final node and visitedNodes count
             }
     
             char[] wordChars = currentWord.toCharArray();
@@ -83,6 +89,6 @@ public class Astar {
             }
         }
     
-        return null; // Return null if no word ladder is found
+        return new WordLadderResult(null, visitedNodes); // Return null node and visitedNodes count if no word ladder is found
     }
 }
