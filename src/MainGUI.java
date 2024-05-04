@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -98,6 +97,11 @@ public class MainGUI {
                 }
                 if (startWord.length() != targetWord.length()) {
                     outputArea.setText("Error: Start Word and End word harus mempunyai panjang kata yang sama.");
+                    return;
+                }
+
+                if (startWord.equals(targetWord)) {
+                    outputArea.setText("Start Word dan End Word tidak boleh sama.");
                     return;
                 }
 

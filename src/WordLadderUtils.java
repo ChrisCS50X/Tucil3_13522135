@@ -67,6 +67,10 @@ public class WordLadderUtils {
     }
 
     public static String printWordLadderGUI(WordLadderResult result) {
+        if (result.node == null) {
+            return "Solusi tidak ditemukan / Tidak ada solusi";
+        }
+        
         WordNode node = result.node;
         Deque<String> words = new ArrayDeque<>();
         int distance = node.numSteps;
@@ -80,6 +84,10 @@ public class WordLadderUtils {
     }
 
     public static String printWordLadderGUIA(WordLadderResult result) {
+        if (result.node == null) {
+            return "Solusi tidak ditemukan / Tidak ada solusi";
+        }
+        
         WordNode node = result.node;
         Deque<String> words = new ArrayDeque<>();
         int distance = node.numSteps - 1;
