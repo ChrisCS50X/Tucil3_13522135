@@ -50,7 +50,7 @@ public class MainGUI {
         algorithmLabel.setBounds(10, 100, 200, 25);
         panel.add(algorithmLabel);
 
-        String[] algorithms = { "Astar", "Greedy", "UCS" };
+        String[] algorithms = { "A*", "Greedy Best First Search", "Uniform Cost Search (UCS)" };
         JComboBox<String> algorithmBox = new JComboBox<>(algorithms);
         algorithmBox.setBounds(220, 100, 160, 25);
         panel.add(algorithmBox);
@@ -109,13 +109,13 @@ public class MainGUI {
                 long startTime = System.nanoTime();
                 WordLadderResult result;
                 switch (algorithm) {
-                    case "Astar":
+                    case "A*":
                         result = Astar.findWordLadderGUI(startWord, targetWord, wordSet);
                         break;
-                    case "Greedy":
+                    case "Greedy Best First Search":
                         result = Greedy.findWordLadderGUI(startWord, targetWord, wordSet);
                         break;
-                    case "UCS":
+                    case "Uniform Cost Search (UCS)":
                         result = UCS.findWordLadderGUI(startWord, targetWord, wordSet);
                         break;
                     default:
@@ -126,7 +126,7 @@ public class MainGUI {
                 
                 // Menampilkan waktu eksekusi dan hasil
                 String resultStr;
-                if (algorithm.equals("Astar")) {
+                if (algorithm.equals("A*")) {
                     resultStr = WordLadderUtils.printWordLadderGUIA(result);
                 } else {
                     resultStr = WordLadderUtils.printWordLadderGUI(result);

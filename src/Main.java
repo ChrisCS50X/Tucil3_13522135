@@ -34,7 +34,7 @@ public class Main {
             }
     
             // Meminta pengguna untuk memilih algoritma
-            System.out.println("Choose an algorithm: 1 for Astar, 2 for Greedy, 3 for UCS");
+            System.out.println("Choose an algorithm: 1 for A*, 2 for Greedy Best First Search, 3 for Uniform Cost Search (UCS)");
             int choice = scanner.nextInt();
     
             // Mengambil waktu awal

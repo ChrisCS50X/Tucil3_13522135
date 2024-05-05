@@ -1,2 +1,2 @@
-Start Word: carrot
-End Word : active
+Start Word : cup
+End Word : tie
