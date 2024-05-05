@@ -58,7 +58,7 @@ public class Greedy {
             String word = node.word;
     
             if (word.equals(targetWord)) {
-                return new WordLadderResult(node, visitedNodes); // Return the final node and visitedNodes count
+                return new WordLadderResult(node, visitedNodes); 
             }
     
             if (!visited.add(word)) {
@@ -72,6 +72,6 @@ public class Greedy {
             }
         }
     
-        return new WordLadderResult(null, visitedNodes); // Return null node and visitedNodes count if no word ladder is found
+        return new WordLadderResult(null, visitedNodes); 
     }
 }

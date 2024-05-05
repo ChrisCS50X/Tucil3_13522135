@@ -67,10 +67,13 @@ public class WordLadderUtils {
     }
 
     public static String printWordLadderGUI(WordLadderResult result) {
-        if (result.node == null) {
-            return "Solusi tidak ditemukan / Tidak ada solusi";
-        }
-        
+    String resultStr = "";
+    if (result.node == null) 
+    {
+        resultStr = "Solusi tidak ditemukan / Tidak ada solusi";
+    } 
+    else 
+    {
         WordNode node = result.node;
         Deque<String> words = new ArrayDeque<>();
         int distance = node.numSteps;
@@ -78,24 +81,29 @@ public class WordLadderUtils {
             words.push(node.word);
             node = node.pre;
         }
-        String resultStr = "Word ladder: " + String.join(" -> ", words) + "\n" + "Jarak: " + distance;
-        resultStr += "\nBanyaknya node yang dikunjungi: " + result.visitedNodes;
-        return resultStr;
+        resultStr = "Word ladder: " + String.join(" -> ", words) + "\n" + "Jarak: " + distance;
+    }
+    resultStr += "\nBanyaknya node yang dikunjungi: " + result.visitedNodes;
+    return resultStr;
     }
 
     public static String printWordLadderGUIA(WordLadderResult result) {
-        if (result.node == null) {
-            return "Solusi tidak ditemukan / Tidak ada solusi";
+        String resultStr = "";
+        if (result.node == null) 
+        {
+            resultStr = "Solusi tidak ditemukan / Tidak ada solusi";
+        } 
+        else 
+        {
+            WordNode node = result.node;
+            Deque<String> words = new ArrayDeque<>();
+            int distance = node.numSteps - 1;
+            while (node != null) {
+                words.push(node.word);
+                node = node.pre;
+            }
+            resultStr = "Word ladder: " + String.join(" -> ", words) + "\n" + "Jarak: " + distance;
         }
-        
-        WordNode node = result.node;
-        Deque<String> words = new ArrayDeque<>();
-        int distance = node.numSteps - 1;
-        while (node != null) {
-            words.push(node.word);
-            node = node.pre;
-        }
-        String resultStr = "Word ladder: " + String.join(" -> ", words) + "\n" + "Jarak: " + distance;
         resultStr += "\nBanyaknya node yang dikunjungi: " + result.visitedNodes;
         return resultStr;
     }

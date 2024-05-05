@@ -10,24 +10,24 @@ import java.util.Set;
 
 public class MainGUI {
     public static void main(String[] args) {
-        // Create the frame
+        // Membuat frame
         JFrame frame = new JFrame("Word Ladder");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
 
-        // Create the panel
+        // Membuat panel
         JPanel panel = new JPanel();
         frame.add(panel);
         placeComponents(panel);
 
-        // Show the frame
+        // Menampilkan frame
         frame.setVisible(true);
     }
 
     private static void placeComponents(JPanel panel) {
         panel.setLayout(null);
 
-        // Create the start word label and text field
+        // Membuat label dan field teks untuk kata awal
         JLabel startLabel = new JLabel("Masukkan Start Word:");
         startLabel.setBounds(10, 20, 200, 25);
         panel.add(startLabel);
@@ -36,7 +36,7 @@ public class MainGUI {
         startText.setBounds(220, 20, 160, 25);
         panel.add(startText);
 
-        // Create the target word label and text field
+        // Membuat label dan field teks untuk kata target
         JLabel targetLabel = new JLabel("Masukkan End Word:");
         targetLabel.setBounds(10, 60, 200, 25);
         panel.add(targetLabel);
@@ -45,7 +45,7 @@ public class MainGUI {
         targetText.setBounds(220, 60, 160, 25);
         panel.add(targetText);
 
-        // Create the algorithm choice label and combo box
+        // Membuat label dan combo box untuk pilihan algoritma
         JLabel algorithmLabel = new JLabel("Pilih Algoritma:");
         algorithmLabel.setBounds(10, 100, 200, 25);
         panel.add(algorithmLabel);
@@ -55,24 +55,24 @@ public class MainGUI {
         algorithmBox.setBounds(220, 100, 160, 25);
         panel.add(algorithmBox);
 
-        // Create the execute button
+        // Membuat tombol execute
         JButton executeButton = new JButton("Execute");
         executeButton.setBounds(10, 140, 80, 25);
         panel.add(executeButton);
 
-        // Create the output area
+        // Membuat area output
         JTextArea outputArea = new JTextArea();
         outputArea.setBounds(10, 180, 560, 180);
 
-        // Create a scroll pane and add the output area to it
+        // Membuat scroll pane dan menambahkan area output ke dalamnya
         JScrollPane scrollPane = new JScrollPane(outputArea);
         scrollPane.setBounds(10, 180, 560, 180);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        // Add the scroll pane to the panel instead of the output area
+        // Menambahkan scroll pane ke panel bukan area output
         panel.add(scrollPane);
 
-        // Add action listener to the execute button
+        // Menambahkan action listener ke tombol execute
         executeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,23 +80,23 @@ public class MainGUI {
                 String targetWord = targetText.getText().toLowerCase();
                 String algorithm = (String) algorithmBox.getSelectedItem();
 
-                // Load the word list
+                // Memuat daftar kata
                 List<String> wordList = null;
                 try {
                     wordList = Files.readAllLines(Paths.get("./words_alpha.txt"));
                 } catch (IOException ioException) {
-                    outputArea.setText("Error reading word list file.");
+                    outputArea.setText("Error membaca file daftar kata.");
                     return;
                 }
                 Set<String> wordSet = new HashSet<>(wordList);
 
-                // Validate the words
+                // Memvalidasi kata
                 if (!wordSet.contains(startWord) || !wordSet.contains(targetWord)) {
-                    outputArea.setText("Error: Start Word and End word harus merupakan kata-kata berbahasa inggris.");
+                    outputArea.setText("Error: Start Word dan End word harus merupakan kata-kata berbahasa inggris.");
                     return;
                 }
                 if (startWord.length() != targetWord.length()) {
-                    outputArea.setText("Error: Start Word and End word harus mempunyai panjang kata yang sama.");
+                    outputArea.setText("Error: Start Word dan End word harus mempunyai panjang kata yang sama.");
                     return;
                 }
 
@@ -105,7 +105,7 @@ public class MainGUI {
                     return;
                 }
 
-                // Run the selected algorithm
+                // Menjalankan algoritma yang dipilih
                 long startTime = System.nanoTime();
                 WordLadderResult result;
                 switch (algorithm) {
@@ -124,7 +124,7 @@ public class MainGUI {
                 long endTime = System.nanoTime();
                 long duration = (endTime - startTime) / 1_000_000;
                 
-                // Display the execution time and the result
+                // Menampilkan waktu eksekusi dan hasil
                 String resultStr;
                 if (algorithm.equals("Astar")) {
                     resultStr = WordLadderUtils.printWordLadderGUIA(result);

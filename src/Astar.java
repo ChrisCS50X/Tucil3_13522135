@@ -55,21 +55,29 @@ public class Astar {
     }
 
     public static WordLadderResult findWordLadderGUI(String startWord, String targetWord, Set<String> wordSet) {
+        // Membuat PriorityQueue untuk menyimpan WordNode
         PriorityQueue<WordNode> wordQueue = new PriorityQueue<>(Comparator.comparingInt(node -> node.numSteps + WordLadderUtils.heuristic(node.word, targetWord)));
+        
+        // Menambahkan startWord ke queue
         wordQueue.add(new WordNode(startWord, 1, null));
+        
+        // Menambahkan targetWord ke wordSet
         wordSet.add(targetWord);
     
         int visitedNodes = 0;
-    
+        
+        // Loop selama queue tidak kosong
         while (!wordQueue.isEmpty()) {
             WordNode currentNode = wordQueue.poll();
             visitedNodes++;
             String currentWord = currentNode.word;
-    
+            
+            // Jika currentWord sama dengan targetWord, kembalikan WordLadderResult
             if (currentWord.equals(targetWord)) {
-                return new WordLadderResult(currentNode, visitedNodes); // Return the final node and visitedNodes count
+                return new WordLadderResult(currentNode, visitedNodes);
             }
-    
+            
+            // Menciptakan semua kemungkinan kata baru dari currentWord 
             char[] wordChars = currentWord.toCharArray();
             for (int i = 0; i < wordChars.length; i++) {
                 for (char c = 'a'; c <= 'z'; c++) {
@@ -83,12 +91,13 @@ public class Astar {
                         wordQueue.add(new WordNode(newWord, currentNode.numSteps + 1, currentNode));
                         wordSet.remove(newWord);
                     }
-    
+                    
+                    // Mengembalikan karakter asli ke posisi i
                     wordChars[i] = originalChar;
                 }
             }
         }
     
-        return new WordLadderResult(null, visitedNodes); // Return null node and visitedNodes count if no word ladder is found
+        return new WordLadderResult(null, visitedNodes); 
     }
 }
