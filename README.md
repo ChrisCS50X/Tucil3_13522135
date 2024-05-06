@@ -21,9 +21,10 @@ Program ini adalah program yang berfungsi untuk menyelesaikan masalah Word Ladde
 ## Cara Menjalankan Program
 1. Buka terminal dan clone repository ini dengan `git clone https://github.com/ChrisCS50X/Tucil3_13522135.git`
 2. Pergi menuju directory program dengan `cd Tucil3_13522135`
-3. Pergi menuju folder code dengan `cd src`
-4. Compile program dengan cara `javac MainGUI.java`
-5. Jalankan program dengan cara `java MainGUI.java`
+3. Pergi menuju Visual Studio Code dengan menuliskan `code .`
+4. Pada terminal Visual Studi Code, pergi menuju folder source code dengan `cd src`
+5. Compile program dengan cara `javac MainGUI.java`
+6. Jalankan program dengan cara `java MainGUI.java`
 
 ## Cara Menggunakan Program
 1. Ikutin langkah-langkah untuk [Cara Menjalankan Program](#Cara-Menjalankan-Program) terlebih dahulu
